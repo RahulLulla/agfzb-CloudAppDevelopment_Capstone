@@ -26,11 +26,11 @@
                     </div>
                 </div>
             </nav>
-            <h1 class="card-title"> Best-rated cars by price </h1>
-            <div class="card-deck ">
-                <div class="card" style="width: 36rem;">
-                    <div class="card-body bg-light">
-                        <!-- <img src="{{ MEDIA_URL }}/{{ course.image }}" width="360" height="360" > -->
+            <h1 class="card-title" style="padding:20px"> Best-rated cars by price </h1>
+            <div class="card-columns">
+                <div class="card" style="width: 36rem; margin-left:20px">
+                    <div class="card-body bg-white">
+                        <img src="{{MEDIA_URL}}/emoji/car1.jpeg"  width="250px" height="190px">
                         <h5 class="card-title"> 
                             around Rs 2L 
                         </h5>
@@ -45,10 +45,11 @@
                         </p>
                     </div>
                 </div>
-            </div>
-            <div class="card-deck ">
+            <!-- </div>
+            <div class="card-columns "> -->
                 <div class="card" style="width: 36rem;">
-                    <div class="card-body bg-light">
+                    <div class="card-body bg-white">
+                        <img  src="{{MEDIA_URL}}/emoji/car2.jpeg" width="250px" height="190px">
                         <h5 class="card-title">
                             around Rs 2L-10L
                         </h5>
@@ -66,7 +67,7 @@
                 </div>
             </div>
         </div>
-        
+
         <footer>
             {% include "djangoapp/footer.html" %}
         </footer> 
