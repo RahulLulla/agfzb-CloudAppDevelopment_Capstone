@@ -17,7 +17,7 @@
     <!-- Remove this line the first time you edit this file -->
     <!--Add a nav bar here -->
     {% block pagecontent %}
-    <div class="container">
+    <div class="content">
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -30,7 +30,12 @@
         </nav>
         This is the index page of your Django app!
     <!--Add a dealer table here -->
+        <!-- <footer > @ 2022 Copyright : Rahul </footer> -->
     </div>
+
+    <footer>
+        {% include "djangoapp/footer.html" %}
+    </footer>
     {% endblock %}
 </body>
 </html>

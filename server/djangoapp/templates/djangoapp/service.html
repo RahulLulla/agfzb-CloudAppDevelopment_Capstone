@@ -14,7 +14,7 @@
 </head>
     {% block pagecontent %}
     <body>
-        <div class="container">
+        <div class="content">
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -26,34 +26,50 @@
                     </div>
                 </div>
             </nav>
-        </div>
-        <div class="card-deck left ">
-            <div class="card" style="width: 36rem;">
-                <div class="card-body bg-light">
-                    <h1 class="card-title"> Best-rated cars by price </h1>
-                    <!-- <img src="{{ MEDIA_URL }}/{{ course.image }}" width="360" height="360" > -->
-                    <h5 class="card-title"> around Rs 2L </h5>
-                        <p class="card-text">Top Sedan</p>
-                            <u><strong><p class="card-text">Toyota Yaris</p></strong></u>
-                        <p class="card-text">Top SUV</p>
-                            <u><strong><p class="card-text">Kia Soul</p></strong></u>
-                        <p class="card-text">Top Minivan</p>
-                            <u><strong><p class="card-text">Mazda 3</p></strong></u>
+            <h1 class="card-title"> Best-rated cars by price </h1>
+            <div class="card-deck ">
+                <div class="card" style="width: 36rem;">
+                    <div class="card-body bg-light">
+                        <!-- <img src="{{ MEDIA_URL }}/{{ course.image }}" width="360" height="360" > -->
+                        <h5 class="card-title"> 
+                            around Rs 2L 
+                        </h5>
+                        <p class="card-text">Top Sedan
+                            <br><u><strong>Toyota Yaris</strong></u>
+                        </p>
+                        <p class="card-text">Top SUV
+                            <br><u><strong>Kia Soul</strong></u>
+                        </p>
+                        <p class="card-text">Top Minivan
+                            <br><u><strong>Mazda 3</strong></u>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-deck ">
+                <div class="card" style="width: 36rem;">
+                    <div class="card-body bg-light">
+                        <h5 class="card-title">
+                            around Rs 2L-10L
+                        </h5>
+                        <p class="card-text">Top Sedan
+                            <br><u><strong>Volkswagen Taos</strong></u>
+                        </p>
+                        
+                        <p class="card-text">Top SUV
+                            <br><u><strong>Honda Civic</strong></u>
+                        </p>
+                        <p class="card-text">Top Minivan
+                            <br><u><strong>Hyundai Santa Cruz</strong></u>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-deck right ">
-            <div class="card" style="width: 36rem;">
-                <div class="card-body bg-light">
-                    <h5 class="card-title">around Rs 2L-10L</h5>
-                        <p class="card-text">Top Sedan</p>
-                        <u><strong><p class="card-text">Volkswagen Taos</p></strong></u>
-                        <p class="card-text">Top SUV</p>
-                        <u><strong><p class="card-text">Honda Civic</p></strong></u>
-                        <p class="card-text">Top Minivan</p>
-                        <u><strong><p class="card-text">Hyundai Santa Cruz</p></strong></u>
-            </div>
-        </div>
-    </div>
+        
+        <footer>
+            {% include "djangoapp/footer.html" %}
+        </footer> 
     </body>
     {% endblock %}
 </html>
