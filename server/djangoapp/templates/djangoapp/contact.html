@@ -7,15 +7,18 @@
 </head>
 {% block pagecontent %}
 <body>
+    <div class="container">
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{% url 'djangoapp:index' %}">HOME</a>
                     <a class="navbar-brand" href="{% url 'djangoapp:about' %}">ABOUT US</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:service' %}">NEW CARS</a>
                     <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">CONTACT US</a>
                 </div>
             </div>
         </nav>
+    </div>
     <div class="container">
         <h1> How to Find us</h1>
         <h2> If you have any questions feel free to write us an email or contact us using details given below</h2>
