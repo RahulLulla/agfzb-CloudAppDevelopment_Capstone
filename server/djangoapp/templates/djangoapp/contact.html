@@ -1,0 +1,30 @@
+{% extends 'djangoapp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}About Us {% endblock %}</title>
+</head>
+{% block pagecontent %}
+<body>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">HOME</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:about' %}">ABOUT US</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">CONTACT US</a>
+                </div>
+            </div>
+        </nav>
+    <div class="container">
+        <h1> How to Find us</h1>
+        <h2> If you have any questions feel free to write us an email or contact us using details given below</h2>
+        <h1> Headquarters:</h1>
+        <h2> 101 North America, USA </h2>
+        <h2> Email: newcardealer101@gmail.com </h2>
+        <h2> Telephone: +1 800 101 10101</h2>
+    </div>
+    
+</body>
+{% endblock %}
+</html>

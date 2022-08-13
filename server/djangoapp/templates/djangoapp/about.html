@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} Home {% endblock %}</title>
+    <title>{% block title %}About Us {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -12,12 +12,8 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 </head>
-
-<body>
-    <!-- Remove this line the first time you edit this file -->
-    <!--Add a nav bar here -->
     {% block pagecontent %}
-    <div class="container">
+    <body>
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -27,9 +23,11 @@
                 </div>
             </div>
         </nav>
-        This is the index page of your Django app!
-    <!--Add a dealer table here -->
+    <div class="container">
+        <h1>
+        Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at reasonable prices.
+        </h1>
     </div>
+    </body>
     {% endblock %}
-</body>
 </html>
