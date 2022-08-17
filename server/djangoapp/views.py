@@ -82,25 +82,34 @@ def registration_request(request):
 #     context = {}
 #     if request.method == "GET":
 #         return render(request, 'djangoapp/index.html', context)
-
-
-# Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
-
 def get_dealerships(request):
     if request.method == "GET":
         # url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership?state=\"Texas\""
         url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
-        
         # dealerships = get_dealers_from_cf(url)
         dealerships = get_dealers_by_state(url,state="California")
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        dealer_st = ' '.join([dealer.st for dealer in dealerships])
+        #dealer_st = ' '.join([dealer.st for dealer in dealerships])
         # Return a list of dealer short name
-        return HttpResponse(dealer_names+dealer_st)
+        return HttpResponse(dealer_names) #+'\n'+dealer_st)
+
+def get_dealerships_by_state(request, state):
+    if request.method == "GET":
+        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
+        dealerships = get_dealers_by_state(url,state=state)
+        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        dealer_st = ' '.join([dealer.st for dealer in dealerships])
+        return HttpResponse(dealer_names)
+
+# Create a `get_dealer_details` view to render the reviews of a dealer
+def get_dealer_details(request, dealer_id):
+    if request.method == "GET":
+        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
+        reviews = get_dealer_reviews_from_cf(url,dealerId=dealer_id)
+        list_review = ' '.join([r.review for r in reviews])
+        return HttpResponse(list_review)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):

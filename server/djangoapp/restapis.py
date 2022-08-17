@@ -2,14 +2,14 @@ import requests
 import json
 # import related models here
 from requests.auth import HTTPBasicAuth
-from .models import CarDealer
+from .models import CarDealer, DealerReview
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 
 def get_request(url, **kwargs):
-    print(kwargs)
+    # print(kwargs)
     print("GET from {} ".format(url))
     try:
         # Call get method of requests library with URL and parameters
@@ -83,3 +83,30 @@ def get_dealers_by_state(url, **kwargs):
             results.append(dealer_obj)
 
     return results    
+
+# get_dealer_reviews_from_cf to get all reviews by dealer's id.
+def get_dealer_reviews_from_cf(url, **kwargs):
+    results = []
+    # Call get_request with a URL parameter
+    json_result = get_request(url,dealerId=kwargs["dealerId"])
+    if json_result and "result" in json_result:
+        # Get the row list in JSON as dealers
+        # print(json_result)
+        reviews = json_result["result"]
+        # For each dealer object
+        for review_doc in reviews:
+            # Get its content in `doc` object
+            # dealer_doc = dealer["doc"]
+            # Create a CarDealer object with values in `doc` object
+            review_obj = DealerReview(dealership=review_doc["dealership"],
+                name=review_doc["name"],
+                purchase=review_doc["purchase"],
+                review=review_doc["review"],
+                purchase_date=review_doc["purchase_date"],
+                car_make=review_doc["car_make"],
+                car_model=review_doc["car_model"],
+                car_year=review_doc["car_year"],
+                id=review_doc["id"])
+            results.append(review_obj)
+
+    return results
