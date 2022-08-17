@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-# from .restapis import related methods
+from .restapis import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -90,14 +90,17 @@ def registration_request(request):
 
 def get_dealerships(request):
     if request.method == "GET":
-        #url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership?state=\"22\""
+        # url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership?state=\"Texas\""
         url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
+        
+        # dealerships = get_dealers_from_cf(url)
+        dealerships = get_dealers_by_state(url,state="California")
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        dealer_st = ' '.join([dealer.st for dealer in dealerships])
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        return HttpResponse(dealer_names+dealer_st)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
