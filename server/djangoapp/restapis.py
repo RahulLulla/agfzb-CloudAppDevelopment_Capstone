@@ -9,7 +9,7 @@ from watson_developer_cloud.natural_language_understanding_v1 \
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
-api_key = 'jR5TOjBDhGaRF2U9japjLuXF2gP1rW43Xvhchu2THucE'
+
 def get_request(url, **kwargs):
     # print(kwargs)
     print("GET from {} ".format(url))
@@ -109,10 +109,11 @@ def get_dealer_reviews_from_cf(url, **kwargs):
                 car_model=review_doc["car_model"],
                 car_year=review_doc["car_year"],
                 id=review_doc["id"])
-            review_obj.sentiment = analyze_review_sentiments(url,review_obj.review)
+            # review_obj.sentiment = analyze_review_sentiments(review_obj.review)
             results.append(review_obj)
             print('Review:',review_obj.review)
             print('Sentiment:',review_obj.sentiment)
+            # print(str(review_obj))
 
     return results
 
@@ -120,11 +121,12 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-def analyze_review_sentiments(url, dealerreview):
+def analyze_review_sentiments(dealerreview):
+    url='https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/b9c3d172-a7ac-40c2-8c76-d15b61a50abb'
     params = dict()
     params["return_analyzed_text"]=True
     params["text"] = dealerreview
-    # params["version"] = kwargs["version"]
+    params["version"] = '2019-07-12'
     params["features"] = Features(sentiment=SentimentOptions())
     try:
         response = requests.get(url, params=params, 
@@ -145,3 +147,7 @@ def analyze_review_sentiments(url, dealerreview):
     # json_data = json.loads(response.text)
     # print(json_data)
     return {}
+
+
+def post_request(url, json_payload, **kwargs):
+    requests.post(url, params=kwargs, json=json_payload)

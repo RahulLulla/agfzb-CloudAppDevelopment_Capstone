@@ -112,6 +112,12 @@ def get_dealer_details(request, dealer_id):
         return HttpResponse(list_review)
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    review = {}
+    review["time"] = datetime.utcnow().isoformat()
+    review["dealership"] = 11
+    review["review"] = "This is a great car dealer"
+    review["name"] = 11
+    review["purchase"] = 11
+    json_payload["review"] = review
 
