@@ -3,6 +3,8 @@ import json
 # import related models here
 from requests.auth import HTTPBasicAuth
 from .models import CarDealer, DealerReview
+from watson_developer_cloud.natural_language_understanding_v1 \
+    import Features, SentimentOptions
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -107,7 +109,7 @@ def get_dealer_reviews_from_cf(url, **kwargs):
                 car_model=review_doc["car_model"],
                 car_year=review_doc["car_year"],
                 id=review_doc["id"])
-            review_obj.sentiment = analyze_review_sentiments(review_obj.review)
+            review_obj.sentiment = analyze_review_sentiments(url,review_obj.review)
             results.append(review_obj)
             print('Review:',review_obj.review)
             print('Sentiment:',review_obj.sentiment)
@@ -118,19 +120,28 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-def analyze_review_sentiments(dealerreview, **kwargs):
+def analyze_review_sentiments(url, dealerreview):
+    params = dict()
+    params["return_analyzed_text"]=True
+    params["text"] = dealerreview
+    # params["version"] = kwargs["version"]
+    params["features"] = Features(sentiment=SentimentOptions())
     try:
-        params = dict()
-        params["text"] = kwargs["text"]
-        params["version"] = kwargs["version"]
-        params["features"] = kwargs["features"]
-        params["return_analyzed_text"] = kwargs["return_analyzed_text"]
         response = requests.get(url, params=params, 
             headers={'Content-Type': 'application/json'},
             auth=HTTPBasicAuth('apikey', api_key))
-    except:
+        status_code = response.status_code
+        print("Analysis request status code {} ".format(status_code))
+        json_data = json.loads(response.text)
+        print('response: ',response)
+        print(json_data)
+        return json_data
+    except Exception as e:
         print("Network exception occurred")
-    status_code = response.status_code
-    print("With status {} ".format(status_code))
-    json_data = json.loads(response.text)
-    return json_data
+        print(e)
+
+    # status_code = response.status_code
+    # print("With status {} ".format(status_code))
+    # json_data = json.loads(response.text)
+    # print(json_data)
+    return {}
