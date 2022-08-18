@@ -114,10 +114,25 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     review = {}
-    review["time"] = datetime.utcnow().isoformat()
-    review["dealership"] = 11
-    review["review"] = "This is a great car dealer"
-    review["name"] = 11
-    review["purchase"] = 11
-    json_payload["review"] = review
+    json_payload = {}
+    url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
+    if request.user.is_authenticated:
+        print("User is logged in :)")
+        print(f"Username --> {request.user.username}")
+        review["purchase_date"] = datetime.utcnow().isoformat()
+        review["dealership"] = dealer_id
+        review["review"] = "This is a great car dealer"
+        review["name"] = "Sam L Jackson"
+        review["purchase"] = True
+        review["car_make"] = "Pontiac"
+        review["car_model"] = "Firebird"
+        review["car_year"] = 1995
+        review["id"] = 101
+        review["another"] = "field"
+        json_payload["review"] = review
+        status_code = post_request(url, json_payload, dealerId=dealer_id)
+    else:
+        print("User is not logged in :(")
+        status_code = 500
+    return HttpResponse(status_code)
 

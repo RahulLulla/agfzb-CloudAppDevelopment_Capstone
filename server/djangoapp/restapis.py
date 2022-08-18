@@ -5,6 +5,11 @@ from requests.auth import HTTPBasicAuth
 from .models import CarDealer, DealerReview
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, SentimentOptions
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+api_key = os.getenv('api_key')
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -150,4 +155,13 @@ def analyze_review_sentiments(dealerreview):
 
 
 def post_request(url, json_payload, **kwargs):
-    requests.post(url, params=kwargs, json=json_payload)
+    # try:
+    #     response = requests.post(url, params=kwargs, json=json_payload)
+    # except Exception as e:
+    #     print(e)    
+
+    response = requests.post(url, params=kwargs, json=json_payload)
+    status_code = response.status_code
+    print("With status {} ".format(status_code))
+    # json_data = json.loads(response.text)
+    return status_code
