@@ -87,8 +87,8 @@ def get_dealerships(request):
         # url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership?state=\"Texas\""
         url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
-        # dealerships = get_dealers_from_cf(url)
-        dealerships = get_dealers_by_state(url,state="California")
+        dealerships = get_dealers_from_cf(url)
+        # dealerships = get_dealers_by_state(url,state="California")
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         #dealer_st = ' '.join([dealer.st for dealer in dealerships])
