@@ -3,8 +3,8 @@ import json
 # import related models here
 from requests.auth import HTTPBasicAuth
 from .models import CarDealer, DealerReview
-from watson_developer_cloud.natural_language_understanding_v1 \
-    import Features, SentimentOptions
+# from watson_developer_cloud.natural_language_understanding_v1 \
+#     import Features, SentimentOptions
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -131,20 +131,8 @@ def analyze_review_sentiments(dealerreview):
     params = dict()
     params["return_analyzed_text"]=True
     params["text"] = dealerreview
-    params["version"] = '2019-07-12'
-    params["features"] = {"keywords":{"sentiment": True,"limit": 1}}
-    '''
-    https://github.com/RahulLulla/cazgi-IBM-Watson-NLU-Project/blob/master/sentimentAnalyzeServer/sentimentAnalyzerServer.js
-            {
-            "text": textToAnalyze,
-            "features": {
-                "keywords": {
-                    "sentiment": true,
-                    "limit": 1
-                }
-            }
-        }
-    '''
+    # params["version"] = '2019-07-12'
+    params["features"] = {"sentiment":{"keywords":{"sentiment": True,"limit": 1}}}
     try:
         response = requests.get(nlu_watson_url, params=params, 
             headers={'Content-Type': 'application/json'},
@@ -154,15 +142,14 @@ def analyze_review_sentiments(dealerreview):
         json_data = json.loads(response.text)
         print('response: ',response)
         print(json_data)
-        return json_data
+        # {'error': 'not enough text for language id', 'code': 422}
+        if 'error' in json_data and json_data['error']=='not enough text for language id':
+            return 'neutral'
+        return json_data["sentiment"]["document"]["label"]
     except Exception as e:
         print("Network exception occurred")
         print(e)
-
-    # status_code = response.status_code
-    # print("With status {} ".format(status_code))
-    # json_data = json.loads(response.text)
-    # print(json_data)
+        
     return {}
 
 
