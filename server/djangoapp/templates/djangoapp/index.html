@@ -49,12 +49,36 @@
             </ul>
             </div>
         </nav>        
-    <!--Add a dealer table here -->
-        {% if message %}
+    {% if message %}
         <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
         {{ message }}
-        {% endif %}
-        My Django Page
+    {% endif %}
+    
+    <!--Add a dealer table here -->
+    <!--         My Django Page -->
+        <table class="table" id="table" data-filter-control="true">
+            <thead>
+                <tr>
+                    <th data-field="id">ID<th>
+                    <th data-field="dealerName">Dealer Name<th>
+                    <th data-field="city">City<th>
+                    <th data-field="address">Address<th>
+                    <th data-field="zip">Zip<th>
+                    <th data-field="state" data-filter-control="select">State<th>
+            </thead>
+            <tbody>
+                {% for dealer in dealership_list %}
+                    <tr>
+                        <td>{{dealer.id}}</td>
+                        <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</td>
+                        <td>{{dealer.city}}</td>
+                        <td>{{dealer.address}}</td>
+                        <td>{{dealer.zip}}</td>
+                        <td>{{dealer.st}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <footer>
@@ -62,4 +86,11 @@
     </footer>
     {% endblock %}
 </body>
+
+<script>
+    $(function(){
+        $('#table').bootstrapTable()
+    })
+</script>
+
 </html>
