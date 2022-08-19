@@ -1,17 +1,87 @@
+{% extends 'djangoapp/base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>{% block title %} Dealership Review {% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    
 </head>
-
     <body>
-
     <!--Add a nav bar here -->
+{% block pagecontent %}
+    <div class="content">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">HOME</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:about' %}">ABOUT US</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:service' %}">NEW CARS</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">CONTACT US</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                            <input type="password" class="form-control" placeholder="Password" name="psw" >
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+            </div>
+        </nav>
+    </div>
 
     <!-- Add reviews as cards -->
+        {% if user.is_authenticated %}
+            <a class="btn btn-link" href="{% url 'djangoapp:add_review' %}">Add review</a>
+             
+    <!-- Display the reviews for dealer -->
+            <div class="card-columns">
+                {% for review in reviews_obj_list %}
+                    <div class="card">
+                        {% if review.sentiment=='positive' %}
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png">
+                        {% elif review.sentiment=='negative' %}
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png">
+                        {% else %}
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png">
+                        {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ review.car_model }}</h5>
+                                <h5 class="card-title">{{ review.name }}</h5>
+                                <h5 class="card-title">{{ review.car_make }}</h5>
+                           <!--   Convert the date to year -->
+                                <h5 class="card-title">{{ review.purchase_date }}</h5>
+                                <p class="card-text">{{ review.review }}</p>
+                            </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}   
+        
+    <footer>
+        {% include "djangoapp/footer.html" %}
+    </footer>
+    {% endblock %}
 
     </body>
 
