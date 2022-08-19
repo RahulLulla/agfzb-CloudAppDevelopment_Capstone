@@ -14,9 +14,9 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     
 </head>
-    <body>
+<body>
     <!--Add a nav bar here -->
-{% block pagecontent %}
+    {% block pagecontent %}
     <div class="content">
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
@@ -27,6 +27,7 @@
                     <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">CONTACT US</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
+
                 {% if user.is_authenticated %}
                 <li>
                     <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
@@ -82,7 +83,6 @@
         {% include "djangoapp/footer.html" %}
     </footer>
     {% endblock %}
-
-    </body>
+</body>
 
 </html>
