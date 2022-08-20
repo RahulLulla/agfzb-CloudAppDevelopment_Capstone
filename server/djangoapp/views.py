@@ -9,7 +9,7 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
-
+import random
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -117,30 +117,70 @@ def get_dealer_details(request, dealer_id):
         dealerships_name = get_dealer_name_by_ID(url,dealer_id)
         # review_list = ' '.join([r.review for r in reviews])
         # return HttpResponse(review_list)
-        return render(request, 'djangoapp/dealer_details.html', {'reviews_obj_list': reviews,'dealerships_name':dealerships_name})
+        return render(request, 'djangoapp/dealer_details.html', {'reviews_obj_list': reviews,
+        'dealerships_name':dealerships_name,
+        'dealer_id':dealer_id})
 
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
-    review = {}
-    json_payload = {}
-    url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
     if request.user.is_authenticated:
+        cars = {}
+        json_payload = {}
+        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
+        dealerships_name = get_dealer_name_by_ID(url,dealer_id)
+        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
         print("User is logged in :)")
         print(f"Username --> {request.user.username}")
-        review["purchase_date"] = datetime.utcnow().isoformat()
-        review["dealership"] = dealer_id
-        review["review"] = "This is a great car dealer"
-        review["name"] = "Sam L Jackson"
-        review["purchase"] = True
-        review["car_make"] = "Pontiac"
-        review["car_model"] = "Firebird"
-        review["car_year"] = 1995
-        review["id"] = 101
-        review["another"] = "field"
-        json_payload["review"] = review
-        status_code = post_request(url, json_payload, dealerId=dealer_id)
+        if request.method == "GET":
+            # querying the cars with the dealer id to be reviewed
+            return render(request, 'djangoapp/add_review.html', 
+            {'cars_obj_list': car,'dealerships_name':dealerships_name
+            'dealer_id':dealer_id})
+        else:
+            #reviewContent,purchaseInfo,carDetails,purchasedate
+            review["purchase_date"] = request.POST['purchasedate']
+            # datetime.utcnow().isoformat()
+            review["dealership"] = dealer_id
+            review["review"] = request.POST['reviewContent']
+            review["name"] = request.POST['username']
+            review["purchase"] = True if request.POST['purchaseInfo']=='true' or request.POST['purchaseInfo']=='True' else False
+            review["id"] = random.randint(101,1000)
+            review["another"] = "field"
+
+            review["car_make"] = request.POST['carDetails']
+            review["car_model"] = request.POST['carDetails'].
+            review["car_year"] = request.POST['carDetails']
+            # car.year.strftime("%Y")
+            json_payload["review"] = review
+            status_code = post_request(url, json_payload, 
+                                        dealerId=dealer_id)
+            # After post we would see list of reviews for the dealerid updated
+            return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
     else:
         print("User is not logged in :(")
-        status_code = 500
-    return HttpResponse(status_code)
+    return HttpResponse("Error code: 500 User is not logged in :(")
+    
+# def add_review(request, dealer_id):
+#     review = {}
+#     json_payload = {}
+#     url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
+#     if request.user.is_authenticated:
+#         print("User is logged in :)")
+#         print(f"Username --> {request.user.username}")
+#         review["purchase_date"] = datetime.utcnow().isoformat()
+#         review["dealership"] = dealer_id
+#         review["review"] = "This is a great car dealer"
+#         review["name"] = "Sam L Jackson"
+#         review["purchase"] = True
+#         review["car_make"] = "Pontiac"
+#         review["car_model"] = "Firebird"
+#         review["car_year"] = 1995
+#         review["id"] = 101
+#         review["another"] = "field"
+#         json_payload["review"] = review
+#         status_code = post_request(url, json_payload, dealerId=dealer_id)
+#     else:
+#         print("User is not logged in :(")
+#         status_code = 500
+#     return HttpResponse(status_code)
 

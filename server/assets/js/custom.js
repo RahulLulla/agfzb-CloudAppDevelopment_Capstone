@@ -6,3 +6,7 @@ $(function(){
         $('#dealer-table').bootstrapTable()
 
 });    
+
+$('.date-own').datepicker({
+    format: 'mm/dd/yyyy'
+});
