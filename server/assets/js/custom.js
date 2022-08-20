@@ -7,6 +7,14 @@ $(function(){
 
 });    
 
-$('.date-own').datepicker({
-    format: 'mm/dd/yyyy'
-});
+// $(function(){
+//     $('#purchasedate').datepicker({
+//         format: 'mm/dd/yyyy'
+//     });
+// });
+
+// $(document).ready(function () {
+//     $('#purchasedate').datepicker({
+//         format: 'mm/dd/yyyy'
+//     });
+// });

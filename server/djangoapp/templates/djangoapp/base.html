@@ -13,9 +13,16 @@
         <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
         <script src="{% static 'js/custom.js' %}"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">    
+        <!-- <script type="text/javascript" src="datepicker/bootstrap-datepicker.js"></script> -->
+        <script>
+                $('#purchasedate').datepicker({
+                    format: 'mm/dd/yyyy'
+                });
+        </script>   
     </head>
     <body>
         {% block pagecontent %}
         {% endblock %}
     </body>
+
 </html>

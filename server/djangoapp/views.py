@@ -135,8 +135,8 @@ def add_review(request, dealer_id):
             
             # course = get_object_or_404(CarModel, pk=course_id)
             result = CarModel.objects.filter(dealer_id=dealer_id)#.values_list( flat=True)
-            print(result)
-            print([f.name for f in CarModel._meta.get_fields()])
+            # print(result)
+            # print([f.name for f in CarModel._meta.get_fields()])
             return render(request, 'djangoapp/add_review.html', 
             {'cars': result,'dealerships_name':dealerships_name,
             'dealer_id':dealer_id})
@@ -144,22 +144,26 @@ def add_review(request, dealer_id):
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
             review = {}
             #reviewContent,purchaseInfo,carDetails,purchasedate
-            print('purchasecheck',request.POST['purchasedate'])
-            print('purchasecheck',request.user.username)
-            print('purchasecheck',request.POST['car'])
-            print('purchasecheck',request.POST['carDetails'])
-            print('purchasecheck',request.POST['purchasecheck'])
-            print('purchasecheck',request.POST['reviewContent'])
-            review["purchase_date"] = request.POST['purchasedate']
+            print('purchasedate',request.POST['purchasedate'])
+            print('username',request.user.username)
+            print('car',request.POST['car'])
+            if 'purchasecheck' in request.POST:
+                print('purchasecheck',request.POST['purchasecheck'])
+            print('reviewContent',request.POST['reviewContent'])
+            print('dealer_id',dealer_id)
+
+            # review["purchase_date"] = request.POST['purchasedate'].isoformat()
+            review["purchase_date"] = datetime.datetime.strptime(request.POST['purchasedate'], '%Y-%m-%d %H:%M:%S.%f')
+
             # datetime.utcnow().isoformat()
             review["dealership"] = dealer_id
             review["review"] = request.POST['reviewContent']
             review["name"] = request.user.username
-            review["purchase"] = True if request.POST['purchaseInfo']=='true' or request.POST['purchaseInfo']=='True' else False
+            review["purchase"] = True if 'purchasecheck' in request.POST else False
             review["id"] = random.randint(101,1000)
             review["another"] = "field"
 
-            car = CarModel.objects.filter(id=request.POST['reviewContent'])
+            car = CarModel.objects.get(pk=int(request.POST['car']))
             print(car.carmake.name,car.name,car.year)
             review["car_make"] = car.carmake.name
             review["car_model"] = car.name
