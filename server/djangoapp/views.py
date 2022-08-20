@@ -13,6 +13,12 @@ import random
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+def datetime_to_isoformat(obj):
+    print("Inside obj")
+    if isinstance(obj, (datetime)):
+        print("value change")
+        return obj.isoformat()
+    raise TypeError ("Type %s is not serializable" % type(obj))
 
 # Create your views here.
 def service(request):
@@ -143,31 +149,33 @@ def add_review(request, dealer_id):
         else:
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
             review = {}
-            #reviewContent,purchaseInfo,carDetails,purchasedate
-            print('purchasedate',request.POST['purchasedate'])
-            print('username',request.user.username)
-            print('car',request.POST['car'])
-            if 'purchasecheck' in request.POST:
-                print('purchasecheck',request.POST['purchasecheck'])
-            print('reviewContent',request.POST['reviewContent'])
-            print('dealer_id',dealer_id)
-
-            # review["purchase_date"] = request.POST['purchasedate'].isoformat()
-            review["purchase_date"] = datetime.datetime.strptime(request.POST['purchasedate'], '%Y-%m-%d %H:%M:%S.%f')
-
-            # datetime.utcnow().isoformat()
+            purchase_datetime = datetime.strptime(request.POST['purchasedate'], '%m/%d/%Y')#%H:%M:S.%f
+            # purchase_datetime = json.dumps(purchase_datetime, indent = 4, sort_keys = True, default = str)
+            # review_obj = json.dumps({'a':purchase_datetime}, default=datetime_to_isoformat)
+            # print('review_obj:',review_obj)
+            review["purchase_date"] = purchase_datetime.isoformat(timespec='milliseconds')
+            review["purchase_date"] = json.dumps(review["purchase_date"], default=str)
+            # review["purchase_date"] = request.POST['purchasedate']
             review["dealership"] = dealer_id
             review["review"] = request.POST['reviewContent']
             review["name"] = request.user.username
             review["purchase"] = True if 'purchasecheck' in request.POST else False
             review["id"] = random.randint(101,1000)
             review["another"] = "field"
-
+            print('purchasedate',review["purchase_date"])
+            # print('username',request.user.username)
+            # print('car',request.POST['car'])
+            # if 'purchasecheck' in request.POST:
+            #     print('purchasecheck',request.POST['purchasecheck'])
+            # print('reviewContent',request.POST['reviewContent'])
+            # print('dealer_id',dealer_id)
+            print('datetime.utcnow().isoformat():',datetime.utcnow().isoformat())
+            print('Time:',review["purchase_date"])
             car = CarModel.objects.get(pk=int(request.POST['car']))
             print(car.carmake.name,car.name,car.year)
             review["car_make"] = car.carmake.name
             review["car_model"] = car.name
-            review["car_year"] = car.year
+            review["car_year"] = car.year.strftime("%Y")
             # car.year.strftime("%Y")
             json_payload["review"] = review
             status_code = post_request(url, json_payload, 
