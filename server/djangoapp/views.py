@@ -90,10 +90,10 @@ def get_dealerships(request):
         dealerships = get_dealers_from_cf(url)
         context = { 'dealership_list':dealerships }
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        dealer_st = ' '.join([dealer.st for dealer in dealerships])
+        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        # dealer_st = ' '.join([dealer.st for dealer in dealerships])
         # Return a list of dealer short name
-        return HttpResponse('Dealer names: ' + dealer_names +'Short Names: '+dealer_st)
+        # return HttpResponse('Dealer names: ' + dealer_names +'Short Names: '+dealer_st)
         return render(request, 'djangoapp/index.html', context)
 
 def get_dealerships_by_state(request, state):

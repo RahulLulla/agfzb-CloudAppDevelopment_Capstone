@@ -2,6 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+       
+        function myFunction() {
+     alert("Hello! I am an alert box!");
+     }
+ 
+     $(function(){
+         $('#dealer-table').bootstrapTable()
+         alert()
+     });
+     </script>
+
     <meta charset="UTF-8">
     <title>{% block title %} Home {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -11,6 +23,21 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="custom.css">
+       
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+            background-color: black;
+            }
+        .table-wrapper-scroll-y {
+            display: block;
+            background-color: black;
+        }
+    </style> 
+    
 </head>
 
 <body>
@@ -42,29 +69,39 @@
                             <button class="btn btn-primary" type="submit">Login</button>
                             <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
                         </div>
-                        </div>
+            </div>
                     </form>
                 </li>
                 {% endif %}
             </ul>
-            </div>
+    </div>
         </nav>        
     {% if message %}
-        <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
+        <div class="alert alert-warning"> 
+            <!--Style the message paragraph with .alert and .alert-warning class -->
+        </div>
         {{ message }}
     {% endif %}
     
+    <button onclick="myFunction()">Try it</button>
     <!--Add a dealer table here -->
     <!--         My Django Page -->
-        <table class="table" id="table" data-filter-control="true">
+    <div class="container table-wrapper-scroll-y my-custom-scrollbar"
+            style="display: block; position: relative; height: 800px; overflow: auto;">
+        <table class="table" data-filter-control="true" 
+            data-search="true"
+            id="dealer-table"
+            data-show-toggle="true"> 
             <thead>
                 <tr>
-                    <th data-field="id">ID<th>
-                    <th data-field="dealerName">Dealer Name<th>
-                    <th data-field="city">City<th>
-                    <th data-field="address">Address<th>
-                    <th data-field="zip">Zip<th>
-                    <th data-field="state" data-filter-control="select">State<th>
+                    <th data-field="id" data-checkbox="true">ID</th>
+                    <th data-field="dealerName">Dealer Name</th>
+                    <th data-field="city">City</h>
+                    <th data-field="address" >Address</th>
+                    <th data-field="zip">Zip</th>
+                    <th data-field="state" data-filter-control="select">
+                        State</th>
+                </tr>
             </thead>
             <tbody>
                 {% for dealer in dealership_list %}
@@ -86,11 +123,5 @@
     </footer>
     {% endblock %}
 </body>
-
-<script>
-    $(function(){
-        $('#table').bootstrapTable()
-    })
-</script>
 
 </html>

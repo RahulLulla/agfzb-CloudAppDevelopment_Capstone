@@ -60,9 +60,9 @@
             <div class="card-columns">
                 {% for review in reviews_obj_list %}
                     <div class="card">
-                        {% if review.sentiment=='positive' %}
+                        {% if review.sentiment == "positive" %}
                             <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png">
-                        {% elif review.sentiment=='negative' %}
+                        {% elif review.sentiment == "negative" %}
                             <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png">
                         {% else %}
                             <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png">

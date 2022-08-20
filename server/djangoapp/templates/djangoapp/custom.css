@@ -1,0 +1,10 @@
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+    background-color: black;
+    }
+.table-wrapper-scroll-y {
+    display: block;
+    background-color: black;
+}
