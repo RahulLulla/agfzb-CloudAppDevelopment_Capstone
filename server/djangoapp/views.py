@@ -142,19 +142,28 @@ def add_review(request, dealer_id):
             'dealer_id':dealer_id})
         else:
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
+            review = {}
             #reviewContent,purchaseInfo,carDetails,purchasedate
+            print('purchasecheck',request.POST['purchasedate'])
+            print('purchasecheck',request.user.username)
+            print('purchasecheck',request.POST['car'])
+            print('purchasecheck',request.POST['carDetails'])
+            print('purchasecheck',request.POST['purchasecheck'])
+            print('purchasecheck',request.POST['reviewContent'])
             review["purchase_date"] = request.POST['purchasedate']
             # datetime.utcnow().isoformat()
             review["dealership"] = dealer_id
             review["review"] = request.POST['reviewContent']
-            review["name"] = request.POST['username']
+            review["name"] = request.user.username
             review["purchase"] = True if request.POST['purchaseInfo']=='true' or request.POST['purchaseInfo']=='True' else False
             review["id"] = random.randint(101,1000)
             review["another"] = "field"
 
-            review["car_make"] = request.POST['carDetails']
-            review["car_model"] = request.POST['carDetails']
-            review["car_year"] = request.POST['carDetails']
+            car = CarModel.objects.filter(id=request.POST['reviewContent'])
+            print(car.carmake.name,car.name,car.year)
+            review["car_make"] = car.carmake.name
+            review["car_model"] = car.name
+            review["car_year"] = car.year
             # car.year.strftime("%Y")
             json_payload["review"] = review
             status_code = post_request(url, json_payload, 
