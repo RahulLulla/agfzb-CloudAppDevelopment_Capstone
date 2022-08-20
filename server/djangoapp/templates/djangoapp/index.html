@@ -2,42 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-       
-        function myFunction() {
-     alert("Hello! I am an alert box!");
-     }
- 
-     $(function(){
-         $('#dealer-table').bootstrapTable()
-         alert()
-     });
-     </script>
-
     <meta charset="UTF-8">
     <title>{% block title %} Home {% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-   <link rel="stylesheet" type="text/css" href="custom.css">
-       
-    <style>
-        .my-custom-scrollbar {
-            position: relative;
-            height: 200px;
-            overflow: auto;
-            background-color: black;
-            }
-        .table-wrapper-scroll-y {
-            display: block;
-            background-color: black;
-        }
-    </style> 
-    
+    {% load static %}
 </head>
 
 <body>
@@ -83,18 +50,15 @@
         {{ message }}
     {% endif %}
     
-    <button onclick="myFunction()">Try it</button>
+    <!-- <button onclick="myFunction()">Try it</button> -->
     <!--Add a dealer table here -->
-    <!--         My Django Page -->
-    <div class="container table-wrapper-scroll-y my-custom-scrollbar"
-            style="display: block; position: relative; height: 800px; overflow: auto;">
+    <div class="container table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table" data-filter-control="true" 
-            data-search="true"
-            id="dealer-table"
-            data-show-toggle="true"> 
+            id="dealer-table"> 
+            <!-- data-show-toggle="true" -->
             <thead>
                 <tr>
-                    <th data-field="id" data-checkbox="true">ID</th>
+                    <th data-field="id">ID</th>
                     <th data-field="dealerName">Dealer Name</th>
                     <th data-field="city">City</h>
                     <th data-field="address" >Address</th>

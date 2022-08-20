@@ -53,19 +53,20 @@
 
     <!-- Add reviews as cards -->
         {% if user.is_authenticated %}
-            <a class="btn btn-link" href="{% url 'djangoapp:add_review' %}">Add review</a>
              
     <!-- Display the reviews for dealer -->
+    <div class="container" style="padding: 15px 100px 15px 0px;">    
         <h3 class="card-title">Reviews for <b>{{ review.dealership }}</b> </h3>
             <div class="card-columns">
                 {% for review in reviews_obj_list %}
                     <div class="card">
                         {% if review.sentiment == "positive" %}
-                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png">
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" width="40px" height="40px">
+                            
                         {% elif review.sentiment == "negative" %}
-                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png">
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" width="40px" height="40px">
                         {% else %}
-                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png">
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" width="40px" height="40px">
                         {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ review.car_model }}, {{ review.car_make }}</h5>
@@ -77,6 +78,7 @@
                     </div>
                 {% endfor %}
             </div>
+    </div>
         {% endif %}   
         
     <footer>
