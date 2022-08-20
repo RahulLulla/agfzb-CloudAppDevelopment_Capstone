@@ -53,9 +53,10 @@
 
     <!-- Add reviews as cards -->
         {% if user.is_authenticated %}
-            <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer_id %}">Add review</a>
+            
     <!-- Display the reviews for dealer -->
     <div class="container" style="padding: 15px 100px 15px 0px;">    
+        <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer_id %}">Add review</a>
         <h3 class="card-title">Reviews for {{ dealerships_name }} </h3>
             <div class="card-columns">
                 {% for review in reviews_obj_list %}

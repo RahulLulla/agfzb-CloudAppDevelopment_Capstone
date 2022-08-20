@@ -133,7 +133,7 @@ def add_review(request, dealer_id):
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
             dealerships_name = get_dealer_name_by_ID(url,dealer_id)
             return render(request, 'djangoapp/add_review.html', 
-            {'cars_obj_list': cars,'dealerships_name':dealerships_name
+            {'cars_obj_list': cars,'dealerships_name':dealerships_name,
             'dealer_id':dealer_id})
         else:
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
@@ -148,7 +148,7 @@ def add_review(request, dealer_id):
             review["another"] = "field"
 
             review["car_make"] = request.POST['carDetails']
-            review["car_model"] = request.POST['carDetails'].
+            review["car_model"] = request.POST['carDetails']
             review["car_year"] = request.POST['carDetails']
             # car.year.strftime("%Y")
             json_payload["review"] = review
