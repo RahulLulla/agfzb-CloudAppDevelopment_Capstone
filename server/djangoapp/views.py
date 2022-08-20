@@ -13,13 +13,6 @@ import random
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-def datetime_to_isoformat(obj):
-    print("Inside obj")
-    if isinstance(obj, (datetime)):
-        print("value change")
-        return obj.isoformat()
-    raise TypeError ("Type %s is not serializable" % type(obj))
-
 # Create your views here.
 def service(request):
     context = {}
@@ -138,11 +131,7 @@ def add_review(request, dealer_id):
             # querying the cars with the dealer id to be reviewed
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
             dealerships_name = get_dealer_name_by_ID(url,dealer_id)
-            
-            # course = get_object_or_404(CarModel, pk=course_id)
             result = CarModel.objects.filter(dealer_id=dealer_id)#.values_list( flat=True)
-            # print(result)
-            # print([f.name for f in CarModel._meta.get_fields()])
             return render(request, 'djangoapp/add_review.html', 
             {'cars': result,'dealerships_name':dealerships_name,
             'dealer_id':dealer_id})
@@ -150,12 +139,8 @@ def add_review(request, dealer_id):
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
             review = {}
             purchase_datetime = datetime.strptime(request.POST['purchasedate'], '%m/%d/%Y')#%H:%M:S.%f
-            # purchase_datetime = json.dumps(purchase_datetime, indent = 4, sort_keys = True, default = str)
-            # review_obj = json.dumps({'a':purchase_datetime}, default=datetime_to_isoformat)
-            # print('review_obj:',review_obj)
             review["purchase_date"] = purchase_datetime.isoformat(timespec='milliseconds')
             review["purchase_date"] = json.dumps(review["purchase_date"], default=str)
-            # review["purchase_date"] = request.POST['purchasedate']
             review["dealership"] = dealer_id
             review["review"] = request.POST['reviewContent']
             review["name"] = request.user.username
@@ -163,12 +148,6 @@ def add_review(request, dealer_id):
             review["id"] = random.randint(101,1000)
             review["another"] = "field"
             print('purchasedate',review["purchase_date"])
-            # print('username',request.user.username)
-            # print('car',request.POST['car'])
-            # if 'purchasecheck' in request.POST:
-            #     print('purchasecheck',request.POST['purchasecheck'])
-            # print('reviewContent',request.POST['reviewContent'])
-            # print('dealer_id',dealer_id)
             print('datetime.utcnow().isoformat():',datetime.utcnow().isoformat())
             print('Time:',review["purchase_date"])
             car = CarModel.objects.get(pk=int(request.POST['car']))
@@ -176,7 +155,6 @@ def add_review(request, dealer_id):
             review["car_make"] = car.carmake.name
             review["car_model"] = car.name
             review["car_year"] = car.year.strftime("%Y")
-            # car.year.strftime("%Y")
             json_payload["review"] = review
             status_code = post_request(url, json_payload, 
                                         dealerId=dealer_id)
@@ -186,27 +164,3 @@ def add_review(request, dealer_id):
         print("User is not logged in :(")
     return HttpResponse("Error code: 500 User is not logged in :(")
     
-# def add_review(request, dealer_id):
-#     review = {}
-#     json_payload = {}
-#     url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
-#     if request.user.is_authenticated:
-#         print("User is logged in :)")
-#         print(f"Username --> {request.user.username}")
-#         review["purchase_date"] = datetime.utcnow().isoformat()
-#         review["dealership"] = dealer_id
-#         review["review"] = "This is a great car dealer"
-#         review["name"] = "Sam L Jackson"
-#         review["purchase"] = True
-#         review["car_make"] = "Pontiac"
-#         review["car_model"] = "Firebird"
-#         review["car_year"] = 1995
-#         review["id"] = 101
-#         review["another"] = "field"
-#         json_payload["review"] = review
-#         status_code = post_request(url, json_payload, dealerId=dealer_id)
-#     else:
-#         print("User is not logged in :(")
-#         status_code = 500
-#     return HttpResponse(status_code)
-
