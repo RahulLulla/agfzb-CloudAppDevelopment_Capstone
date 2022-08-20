@@ -164,3 +164,13 @@ def post_request(url, json_payload, **kwargs):
     print("With status {} ".format(status_code))
     # json_data = json.loads(response.text)
     return status_code
+
+def get_dealer_name_by_ID(url, dealerId1):
+    json_result = get_request(url)
+    if json_result and "result" in json_result:
+        dealers = json_result["result"]
+        for dealer_doc in dealers:
+            if dealerId1==dealer_doc["id"]:
+                return dealer_doc["full_name"]
+                # short_name=dealer_doc["short_name"]
+    return ''
