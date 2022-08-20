@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-# from .models import related models
+from .models import CarModel,CarDealer,CarMake
 from .restapis import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -132,8 +132,13 @@ def add_review(request, dealer_id):
             # querying the cars with the dealer id to be reviewed
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
             dealerships_name = get_dealer_name_by_ID(url,dealer_id)
+            
+            # course = get_object_or_404(CarModel, pk=course_id)
+            result = CarModel.objects.filter(dealer_id=dealer_id)#.values_list( flat=True)
+            print(result)
+            print([f.name for f in CarModel._meta.get_fields()])
             return render(request, 'djangoapp/add_review.html', 
-            {'cars_obj_list': cars,'dealerships_name':dealerships_name,
+            {'cars': result,'dealerships_name':dealerships_name,
             'dealer_id':dealer_id})
         else:
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"

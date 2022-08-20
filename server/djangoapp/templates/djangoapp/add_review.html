@@ -75,9 +75,9 @@
                     <div class="form-group">
                         <label for="carDetails"><b>Select your car (model-make-year)</b></label>
                         <select name="car" id="carDetails" class="form-select" required>
-                            <!-- {% for car in cars %}
-                                <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
-                            {% endfor %} -->
+                            {% for car in cars %}
+                                <option selected value={{car.id}}>{{car.name}}-{{car.carmake.name}}-{{ car.year|date:"Y" }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
