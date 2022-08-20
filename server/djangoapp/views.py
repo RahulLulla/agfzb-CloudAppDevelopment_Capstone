@@ -126,17 +126,17 @@ def add_review(request, dealer_id):
     if request.user.is_authenticated:
         cars = {}
         json_payload = {}
-        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
-        dealerships_name = get_dealer_name_by_ID(url,dealer_id)
-        url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
         print("User is logged in :)")
         print(f"Username --> {request.user.username}")
         if request.method == "GET":
             # querying the cars with the dealer id to be reviewed
+            url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/dealership"
+            dealerships_name = get_dealer_name_by_ID(url,dealer_id)
             return render(request, 'djangoapp/add_review.html', 
-            {'cars_obj_list': car,'dealerships_name':dealerships_name
+            {'cars_obj_list': cars,'dealerships_name':dealerships_name
             'dealer_id':dealer_id})
         else:
+            url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
             #reviewContent,purchaseInfo,carDetails,purchasedate
             review["purchase_date"] = request.POST['purchasedate']
             # datetime.utcnow().isoformat()
