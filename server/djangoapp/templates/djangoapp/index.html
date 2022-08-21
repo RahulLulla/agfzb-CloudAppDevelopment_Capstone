@@ -53,6 +53,7 @@
     <!-- <button onclick="myFunction()">Try it</button> -->
     <!--Add a dealer table here -->
     <div class="container table-wrapper-scroll-y my-custom-scrollbar">
+        {% if user.is_authenticated %}
         <table class="table" data-filter-control="true" 
             id="dealer-table"> 
             <!-- data-show-toggle="true" -->
@@ -80,6 +81,13 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="container" style="padding-top:100px">
+            <h2 class="mb-0" style="font-family: 'Ariel'" >
+            Welcome!!! Please Login to view and add reviews for Dealerships
+            </h2>
+        </div>
+        {% endif %}
     </div>
 
     <footer>
