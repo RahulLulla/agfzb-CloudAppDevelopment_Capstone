@@ -128,5 +128,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
 
-CSRF_TRUSTED_ORIGINS = ['https://*.appdomain.cloud*','https://*.127.0.0.1','https://localhost:8000/','https://*.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai']
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ['https://*.appdomain.cloud*',
+'https://*.127.0.0.1','https://localhost:8000/',
+'https://*.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai.*',
+'https://rahullulla20-8000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/',
+'https://rah102.us-south.cf.appdomain.cloud/djangoapp']
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# https://rahullulla20-8000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/login/
+# 'https://*.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai*']
+#https://rahullulla20-8000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/djangoapp/
