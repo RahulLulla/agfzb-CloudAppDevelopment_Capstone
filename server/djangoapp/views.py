@@ -138,9 +138,12 @@ def add_review(request, dealer_id):
         else:
             url = "https://1f0aa1ef.us-south.apigw.appdomain.cloud/api/review"
             review = {}
-            purchase_datetime = datetime.strptime(request.POST['purchasedate'], '%m/%d/%Y')#%H:%M:S.%f
-            review["purchase_date"] = purchase_datetime.isoformat(timespec='milliseconds')
-            review["purchase_date"] = json.dumps(review["purchase_date"], default=str)
+            if "purchase_date" in request.POST:
+                purchase_datetime = datetime.strptime(request.POST['purchasedate'], '%m/%d/%Y')#%H:%M:S.%f
+                review["purchase_date"] = purchase_datetime.isoformat(timespec='milliseconds')
+                review["purchase_date"] = json.dumps(review["purchase_date"], default=str)
+            else:
+                review["purchase_date"] = ''
             review["dealership"] = dealer_id
             review["review"] = request.POST['reviewContent']
             review["name"] = request.user.username
@@ -149,7 +152,6 @@ def add_review(request, dealer_id):
             review["another"] = "field"
             print('purchasedate',review["purchase_date"])
             print('datetime.utcnow().isoformat():',datetime.utcnow().isoformat())
-            print('Time:',review["purchase_date"])
             car = CarModel.objects.get(pk=int(request.POST['car']))
             print(car.carmake.name,car.name,car.year)
             review["car_make"] = car.carmake.name
