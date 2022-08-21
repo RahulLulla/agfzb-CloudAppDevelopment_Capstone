@@ -139,4 +139,4 @@ server/djangoapp/migrations/
 .DS_Store
 *.pyc
 server/djangoapp/migrations/
-server/djangoapp/.env
+# server/djangoapp/.env
