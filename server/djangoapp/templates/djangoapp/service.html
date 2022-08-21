@@ -24,8 +24,30 @@
                         <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">CONTACT US</a>
                         
                     </div>
+                <!-- </div> -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                        <li>
+                            <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                            <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Username" name="username" >
+                                    <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                    <button class="btn btn-primary" type="submit">Login</button>
+                                    <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                                </div>
+                            </form>
+                        </li>
+                        {% endif %}
+                    </ul>                
                 </div>
             </nav>
+            
             <h1 class="card-title" style="padding:20px"> Best-rated cars by price </h1>
             <div class="card-columns">
                 <div class="card" style="width: 36rem; margin-left:20px">
@@ -68,6 +90,13 @@
             </div>
         </div>
 
+        {% if message %}
+        <div class="alert alert-warning"> 
+            {{ message }}
+                <!--Style the message paragraph with .alert and .alert-warning class -->
+        </div>
+        {% endif %}
+        
         <footer>
             {% include "djangoapp/footer.html" %}
         </footer> 

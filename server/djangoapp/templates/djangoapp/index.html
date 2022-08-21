@@ -45,9 +45,9 @@
         </nav>        
     {% if message %}
         <div class="alert alert-warning"> 
-            <!--Style the message paragraph with .alert and .alert-warning class -->
+            {{ message }}
+                <!--Style the message paragraph with .alert and .alert-warning class -->
         </div>
-        {{ message }}
     {% endif %}
     
     <!-- <button onclick="myFunction()">Try it</button> -->

@@ -127,3 +127,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
 # print('STATIC_ROOT',STATIC_ROOT)
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
+
+CSRF_TRUSTED_ORIGINS = ['https://*.appdomain.cloud*','https://*.127.0.0.1']
+
