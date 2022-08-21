@@ -10,7 +10,8 @@ env:
   IBM_CLOUD_ORG: rahullulla20@gmail.com
   MANIFEST_NAME: manifest.yml
   IBM_CLOUD_API: ${{secrets.IBM_CLOUD_API_KEY}}
-
+  NLU_API_KEY: ${{secrets.IBM_CLOUD_API_KEY}}
+  NLU_API_URL: ${{secrets.NLU_API_URL}}
 defaults:
   run:
     working-directory: server
