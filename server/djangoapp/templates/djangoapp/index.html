@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">    
-
 </head>
 
 <body>
@@ -61,7 +60,8 @@
     
     <!-- <button onclick="myFunction()">Try it</button> -->
     <!--Add a dealer table here -->
-    <div class="container table-wrapper-scroll-y my-custom-scrollbar">
+    <div class="container table-wrapper-scroll-y my-custom-scrollbar" 
+    style="position: relative;height: 800px;overflow: auto;display: block;">
         {% if user.is_authenticated %}
         <table class="table" data-filter-control="true" 
             id="dealer-table"> 
@@ -103,5 +103,11 @@
         {% include "djangoapp/footer.html" %}
     </footer>
 </body>
+
+<script>
+    $(function(){
+    $('#dealer-table').bootstrapTable()
+});
+</script>
 
 </html>
