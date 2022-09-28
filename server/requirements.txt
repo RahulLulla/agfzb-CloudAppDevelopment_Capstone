@@ -1,5 +1,8 @@
 requests
 Django
 gunicorn==20.1.0
-Pillow==8.0.1
+# Pillow==8.0.1
+Pillow
 python-dotenv
+setuptools
+# setuptools-59.6.0

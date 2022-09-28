@@ -15,6 +15,7 @@ WORKDIR $APP
 # Install the requirements
 COPY requirements.txt $APP
 RUN pip install --upgrade pip
+# RUN pip install --upgrade pillow
 RUN pip install -r requirements.txt
 
 # Copy the rest of the files
